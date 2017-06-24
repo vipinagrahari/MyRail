@@ -3,34 +3,54 @@ package com.android.firebasedemo.myrail;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashScreenActivity extends AppCompatActivity {
+
+    public static final int LOG_IN_REQUEST = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 openHomeScreen();
             }
-        }, 300);
+        }, 1500);
     }
 
     private void openHomeScreen() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            openLaunchComplaintScreen();
+        } else {
+            startActivityForResult(new Intent(this, PhoneAuthActivity.class), LOG_IN_REQUEST);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LOG_IN_REQUEST && resultCode == RESULT_OK) {
+            Toast.makeText(this, "Log in success", Toast.LENGTH_SHORT).show();
+            openLaunchComplaintScreen();
+        } else {
+            Toast.makeText(this, "login failed", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openLaunchComplaintScreen() {
+        Intent intent = new Intent(this, FileComplaintActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
-
 }

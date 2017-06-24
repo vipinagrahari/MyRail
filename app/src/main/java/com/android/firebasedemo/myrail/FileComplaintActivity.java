@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.android.firebasedemo.myrail.model.Complain;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,8 +40,14 @@ public class FileComplaintActivity extends AppCompatActivity {
         String uid = mDatabase.child("complaints").push().getKey();
         Complain complain = new Complain();
         complain.setCategory(category);
+        complain.setComplain(complainText);
+        complain.setPnr(pnr);
         complain.setUserId(FirebaseAuth.getInstance().getCurrentUser().getUid());
         mDatabase.child("complaints").child(uid).setValue(complain);
+        Toast.makeText(this, "Complain registered", Toast.LENGTH_SHORT).show();
+        tvPnr.setText("");
+        tvDescription.setText("");
+        dropdown.setSelection(0);
     }
 
     public void onClick(View v) {
