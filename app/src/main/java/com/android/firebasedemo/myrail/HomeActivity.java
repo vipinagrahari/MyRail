@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            Toast.makeText(this, "Logged in", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,FileComplaintActivity.class));
         } else {
             startActivityForResult(new Intent(this, PhoneAuthActivity.class),LOG_IN_REQUEST);
         }
@@ -33,7 +33,9 @@ public class HomeActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == LOG_IN_REQUEST && resultCode == RESULT_OK){
-            Toast.makeText(this, "Logged in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Log in success", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this,FileComplaintActivity.class));
+
         }
         else{
             Toast.makeText(this, "login failed", Toast.LENGTH_SHORT).show();
