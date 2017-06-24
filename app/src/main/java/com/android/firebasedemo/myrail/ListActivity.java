@@ -1,5 +1,6 @@
 package com.android.firebasedemo.myrail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -31,12 +32,14 @@ public class ListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        toolbar.setTitle("Your Previous Complaints");
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton addNewComplaintButton = (FloatingActionButton) findViewById(R.id.add_new_complaint);
+        addNewComplaintButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                startActivity(new Intent(ListActivity.this, FileComplaintActivity.class));
             }
         });
     }
@@ -84,15 +87,11 @@ public class ListActivity extends AppCompatActivity {
             //Get user map
             Map singleUser = (Map) entry.getValue();
             //Get phone field and append to list
-            arr.add("pnr -> " + singleUser.get("pnr") + "\n" +
-                            "complain -> " + singleUser.get("complain") + "\n"+
-                    "category -> "+ singleUser.get("category") +"\n"
-
-            );
-
-
+            arr.add("\n" + "complain -> " + singleUser.get("complain") +
+                    "\n" + "pnr -> " + singleUser.get("pnr") +
+                    "\n" + "category -> "+ singleUser.get("category") +
+                    "\n");
         }
 
     }
-
 }

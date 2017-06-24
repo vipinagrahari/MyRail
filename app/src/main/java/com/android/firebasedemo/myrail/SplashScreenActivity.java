@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.List;
+
 public class SplashScreenActivity extends AppCompatActivity {
 
     public static final int LOG_IN_REQUEST = 0;
@@ -31,7 +33,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            openLaunchComplaintScreen();
+            openComplaintsListScreen();
         } else {
             startActivityForResult(new Intent(this, PhoneAuthActivity.class), LOG_IN_REQUEST);
         }
@@ -42,14 +44,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LOG_IN_REQUEST && resultCode == RESULT_OK) {
             Toast.makeText(this, "Log in success", Toast.LENGTH_SHORT).show();
-            openLaunchComplaintScreen();
+            openComplaintsListScreen();
         } else {
             Toast.makeText(this, "login failed", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void openLaunchComplaintScreen() {
-        Intent intent = new Intent(this, FileComplaintActivity.class);
+    private void openComplaintsListScreen() {
+        Intent intent = new Intent(this, ListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
