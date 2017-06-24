@@ -11,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.firebasedemo.myrail.model.Complain;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,6 +22,8 @@ public class FileComplaintActivity extends AppCompatActivity {
     Spinner dropdown;
     String[] items;
     EditText tvPnr, tvDescription;
+    private FirebaseAnalytics mFirebaseAnalytics;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class FileComplaintActivity extends AppCompatActivity {
         setContentView(R.layout.activity_file_complaint);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("File A Complaint");
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -65,5 +69,14 @@ public class FileComplaintActivity extends AppCompatActivity {
         String pnr = tvPnr.getText().toString();
         String complain = tvDescription.getText().toString();
         fileComplain(category, pnr, complain);
+        trackAnalytics(category,pnr,complain);
+    }
+
+    private void trackAnalytics(String category, String pnr, String complain) {
+        Bundle bundle = new Bundle();
+        bundle.putString("category", category);
+        bundle.putString("description", complain);
+        bundle.putString("pnr", pnr);
+        mFirebaseAnalytics.logEvent("complaint_registered", bundle);
     }
 }
