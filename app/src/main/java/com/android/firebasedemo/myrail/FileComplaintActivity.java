@@ -26,9 +26,17 @@ public class FileComplaintActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_complaint);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("File A Complaint");
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        initViews();
+    }
+
+    private void initViews() {
         tvPnr = (EditText) findViewById(R.id.et_pnr);
         tvDescription = (EditText) findViewById(R.id.user_complaint_et);
-        setSupportActionBar(toolbar);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         dropdown = (Spinner) findViewById(R.id.complaint_category);
         items = new String[]{"Cleanliness", "Catering", "Security", "Staff", "Coach Defect"};
