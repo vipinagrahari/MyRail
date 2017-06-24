@@ -1,5 +1,6 @@
 package com.android.firebasedemo.myrail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -56,6 +57,7 @@ public class FileComplaintActivity extends AppCompatActivity {
         tvPnr.setText("");
         tvDescription.setText("");
         dropdown.setSelection(0);
+        startActivity(new Intent(this,ListActivity.class));
     }
 
     public void onClick(View v) {
