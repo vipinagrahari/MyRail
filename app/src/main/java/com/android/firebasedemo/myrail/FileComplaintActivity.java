@@ -22,7 +22,7 @@ public class FileComplaintActivity extends AppCompatActivity {
         String[] items = new String[]{"Cleanliness", "Catering", "Security", "Staff", "Coach Defect"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         dropdown.setAdapter(adapter);
-
     }
+
 
 }
